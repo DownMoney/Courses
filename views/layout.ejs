@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><%= pageName %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Loading Bootstrap -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="css/tribal-timetable.css" rel="stylesheet" />
+
+    <!-- Loading Flat UI -->
+    <link href="css/flat-ui.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+<link href="css/nprogress.css" rel="stylesheet">
+    <link rel="shortcut icon" href="images/favicon.ico">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+
+ <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="js/jquery.ui.touch-punch.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-select.js"></script>
+    <script src="js/bootstrap-switch.js"></script>
+    <script src="js/flatui-checkbox.js"></script>
+    <script src="js/flatui-radio.js"></script>
+    <script src="js/jquery.tagsinput.js"></script>
+    <script src="js/jquery.placeholder.js"></script>
+    <script src="js/jquery.stacktable.js"></script>
+    <script src="js/application.js"></script>
+    <script src="js/cs.js"></script>
+    <script src="js/nprogress.js"></script>
+    <script type="text/javascript" src="js/tribal.js"></script>
+    <script type="text/javascript" src="js/tribal-shared.js"></script>
+    <script type="text/javascript" src="js/tribal-timetable.js"></script>
+    <script src="http://192.168.0.9:8082/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+    var socket = io.connect('http://192.168.0.9:8082');
+    </script>
+  </head>
+  <body>
+  <div id="progress"><dt></dt><dd></dd></div>
+<div class="navbar navbar-inverse navbar2">
+            <div class="navbar-inner">
+              <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#nav-collapse-01"></button>
+                <div class="nav-collapse collapse" id="nav-collapse-01">
+                  <ul class="nav">
+                    <li>
+                      <a href="#fakelink">
+                        Course Search
+                        <span class="navbar-unread">1</span>
+                      </a>
+                    </li>
+                    <li onclick="showQB(event);" id="qbTab">
+                      <a href="#">Search Builder</a>
+                    </li>
+                    
+                    <li>
+                    <div class="todo-search">
+              <input class="todo-search-field search" type="search" id="search" onkeypress="if(event.which == 13) startSearch();" value="" placeholder="Search" />              
+            </div>
+
+                    </li>
+                    <li style="position:fixed; right: 80px;">
+                    <% if (!user) { %>
+                    <a href="/login">login</a> 
+                    <% } else { %>
+                      <a href="#" style="">
+                        <%= user.Name  %> 
+                      </a>
+                      <ul>
+                        <li><a href="/timetable">Timetable</a></li>
+                        <li>
+                          <a href="#fakelink">Settings</a>                          
+                        </li>
+                        <li><a href="/logout">Log Out</a></li>
+                      </ul> <!-- /Sub menu -->
+                      <% } %>
+                    </li>
+                  </ul>
+
+                  <div class="qb">
+                    <h3>Search Builder</h3>
+                    <div class="container span6">
+
+                    <div class="span4">
+
+           <label class="" for="tb">Taught by</label>
+                    <select name="tb" value="Choose Lecturer" class="span4" id="tb" onchange="addToSearch(this, 'are taught by');">
+            <option value="0">Choose Lecturer</option>
+          </select>
+          </div>
+
+           <div class="span4">
+
+           <label class="" for="cred">Credits</label>
+                    <select name="" value="Select Credits" class="span4" id="cred" onchange="addToSearch(this, 'are worth');">
+            <option value="0">Select Credits</option>
+          </select>
+          </div>
+
+           <div class="span4">
+
+           <label class="" for="school">School</label>
+                    <select name="" value="Choose School" class="span4" id="school" onchange="addToSearch(this, 'are done by the');">
+            <option value="0">Choose School</option>
+          </select>
+          </div>
+
+
+          <div class="span4">
+
+           <label class="" for="managed">Secretary</label>
+                    <select name="" value="Choose Organizer" class="span4" id="managed" onchange="addToSearch(this, 'are managed by');">
+            <option value="0">Choose Organizer</option>
+          </select>
+          </div>
+
+          <div class="span4">
+
+           <label class="" for="year">Year</label>
+                    <select name="" value="Choose Year" class="span4" id="year" onchange="addToSearch(this, 'are suitable for');">
+            <option value="0">Choose Year</option>
+          </select>
+          </div>
+
+          <div class="span4">
+
+           <label class="" for="sa">Student Availability</label>
+                    <select name="" value="Choose Availability" class="span4" id="sa"  onchange="addToSearch(this, 'are available');">
+            <option value="0">Choose Availability</option>
+          </select>
+          </div>
+
+          <div class="span4">
+
+           <label class="" for="semester">Semester</label>
+                    <select name="" value="Semester" class="span4" id="semester"  onchange="addToSearch(this, 'run in');">
+            <option value="0">Semester</option>
+          </select>
+          </div>
+
+          <div class="span4">
+
+           <label class="" for="about">About</label>
+            <input type="text" id="about" placeholder="About"  onkeyup="addToSearch(this, 'run in');" />
+          </div>
+
+          <div class="span4">
+          
+           <label  for="naf">No Additional Fees</label>
+           <div class="switch switch-square"
+                  data-on-label="Yes"
+                  data-off-label="No">
+                  <input id="naf" type="checkbox" onchange="addToSearch(this, 'run in');" />
+                </div>
+           
+          </div>
+
+          <div class="span4">
+          
+           <label  for="le">Learn</label>
+           <div class="switch switch-square"
+                  data-on-label="Yes"
+                  data-off-label="No">
+                  <input id="le" type="checkbox" onchange="addToSearch(this, 'run in');" />
+                </div>
+           
+          </div>
+
+           <div class="span4">
+          
+           <label  for="nq">No Quota</label>
+           <div class="switch switch-square"
+                  data-on-label="Yes"
+                  data-off-label="No">
+                  <input id="nq" type="checkbox"  onchange="addToSearch(this, 'run in');" />
+                </div>
+           
+          </div>
+
+           <div class="span4 ">
+          
+           <label  for="nrl">No Reading List</label>
+           <div class="switch switch-square"
+                  data-on-label="Yes"
+                  data-off-label="No">
+                  <input id="nrl" type="checkbox" onchange="addToSearch(this, 'run in');"   />
+                </div>
+           
+          </div>
+
+        <div class="span3" onclick="load($('.search').val(),0, true); $('div.qb').hide('slide');">
+         <a href="#fakelink" class="btn btn-large btn-block btn-primary" >Search</a>
+        </div>
+
+                  </div>
+                    </div>
+                </div><!--/.nav -->
+              </div>
+            </div>
+          </div>
+
+
+          <div>
+
+          <%- body %>
+
+
+        </div>
+   
+
+    <div class="modal fade" id="myModal" style="display:none">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body">
+          <h4>Description</h4>
+          <p id="desc"></p>
+          <h4>Location</h4>
+          <p id="location"></p>
+          <h4>Start</h4>
+          <p id="start"></p>
+          <h4>End</h4>
+          <p id="end"></p>
+          <h4>Type</h4>
+          <p id="type"></p>
+          <h4>Code</h4>
+          <p id="code"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success">New Note</button>
+          <button type="button" class="btn btn-primary">Take</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  </body>
+  </html>

@@ -1,0 +1,54 @@
+<% layout('layout') -%>
+<div class="span2 sideMenu">
+  <div>
+    <h3>Pre-requisites</h3>
+    <ul id="preReq">
+    </ul>
+  </div>
+
+
+  <div>
+    <h3>Co-requisites</h3>
+    <ul id="coReq">
+    
+    </ul>
+  </div>
+
+
+  <div>
+    <h3>Prohibited</h3>
+    <ul id="proReq">
+    </ul>
+  </div>
+</div>
+
+<div class="span2 sideMenu right">
+  <div>
+    <h3>Taking</h3>
+    <ul id="taking">
+    </ul>
+  </div>
+</div>
+          <div class="container body">
+         
+
+  <!-- Modal -->
+  
+
+          <div class="todo mrm" >            
+            <ul id="body">
+              
+            </ul>
+            <div class="span4" id="loadMore" style="margin-top: 20px; width:100%; display:none " onclick="loadMore(event);">
+              <a href="#fakelink" class="btn btn-large btn-block btn-primary" >Load More</a>
+            </div>
+          </div>
+          </div>
+
+
+<script>
+  socket.on('search', function(data){
+    populate(data.data);
+   
+  });
+</script>

@@ -1,0 +1,36 @@
+<% layout('layout') -%>
+<% if (message) { %>
+<h3><%= message %></h3>
+<% } %>
+ <div class="container body">	
+<div class="login">
+
+	<div class="login-screen">
+		<div class="login-icon">		
+		<h4>Login to <small>courses</small></h4>
+	</div>
+
+	<form class="login-form" action="/login" method="POST" id="login">
+		<div class="control-group">
+			<input type="text" class="login-field" value="" placeholder="Enter your email" id="login-name" name="username" />
+			<label class="login-field-icon fui-user" for="login-name"></label>
+		</div>
+
+		<div class="control-group">
+			<input type="password" class="login-field" value="" placeholder="Password" id="login-pass" name="password" />
+			<label class="login-field-icon fui-lock" for="login-pass"></label>
+		</div>
+
+		<a class="btn btn-primary btn-large btn-block" href="#" onclick="document.forms['login'].submit();">Login</a>
+	</form>
+</div>
+</div>
+<script>
+$("input").keypress(function(event) {
+    if (event.which == 13) {
+        event.preventDefault();
+        $("#login").submit();
+    }
+});
+
+</script>
