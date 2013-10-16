@@ -125,7 +125,7 @@ function searchFilter(data, fn){
     q+='';
       connection.query(q, function(err, rows){
         return fn(err, rows);
-      });'
+      });
 }
 
 
@@ -339,6 +339,6 @@ io.sockets.on('connection', function (socket){
 
 
 
-console.log('Server running on port 8081');
+console.log('Server running on port 80822');
 
 
