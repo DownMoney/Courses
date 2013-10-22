@@ -17,12 +17,6 @@ connection.connect(function(err) {
  
 });
 
-//var courses = ['INFR08023', 'INFR08008' ];//'INFR08009', 'INFR08018', 'INFR08019'];
-
-var users = [
-    { id: 1, username: 'bob', password: 'secret', email: 'bob@example.com' }
-  , { id: 2, username: 'joe', password: 'birthday', email: 'joe@example.com' }
-];
 
 function getDigest(text){
   var md5sum = crypto.createHash('md5');
@@ -339,6 +333,6 @@ io.sockets.on('connection', function (socket){
 
 
 
-console.log('Server running on port 80822');
+console.log('Server running on port 8082');
 
 
